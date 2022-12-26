@@ -1,36 +1,37 @@
 /**
  * 題意：
  * 給一個未排序的數字陣列，返回最長數字可以連續遞增幾次，數字會有正負
- * 限制： O(n)
  * 思路：
  * 先排序asc
  * 紀錄當前、最長連續幾次，如果數字相同就跳下一個看，數字不同就看該數字-1是否等於前一個（從元素1開始）
+ * 若有限制： O(n)
+ * 就不能先排序因為會耗時O(n logn)
+ * 我們能藉由一個數是否有該數-1來知道他是否是一個起始點，如果是，就往下找+1的數，直到找不到
+ * 如果不是起始點，就跳過
+ * 藉由一個變數紀錄最長的連續次數，我們最後會得到答案
+ * 判斷有無該數，能夠利用set來達成
  * @param {number[]} nums
  * @return {number}
  */
 var longestConsecutive = function (nums) {
-  if (nums.length === 0) {
-    return 0;
-  }
-  let longestConsecutive = 1;
-  let currentConsecutive = 1;
+  let longestConsecutive = 0;
+  const uniqueNums = new Set(nums);
 
-  nums.sort((a, b) => a - b);
-
-  for (let i = 1; i < nums.length; i++) {
-    const prevNum = nums[i - 1];
-    if (nums[i] === prevNum) {
+  for (let num of uniqueNums) {
+    if (uniqueNums.has(num - 1)) {
       continue;
     }
 
-    if (nums[i] - 1 === prevNum) {
+    // 起始點，開始計算連續幾次
+    let currentConsecutive = 1;
+
+    while (uniqueNums.has(num + 1)) {
       currentConsecutive++;
-      longestConsecutive =
-        currentConsecutive > longestConsecutive
-          ? currentConsecutive
-          : longestConsecutive;
-    } else {
-      currentConsecutive = 1;
+      num++;
+    }
+
+    if (currentConsecutive > longestConsecutive) {
+      longestConsecutive = currentConsecutive;
     }
   }
 
