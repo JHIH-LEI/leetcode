@@ -31,8 +31,7 @@ var maxArea = function (height) {
     currentMaxArea = Math.max(currentArea, currentMaxArea);
     if (height[l] <= height[r]) {
       // 等於高已經固定了，這時需要找最大的寬（也就是最右邊的線）
-      l++; // 該左線最大的可能性已經找到，把左線換下一位
-      r = endIndex; // 回位
+      l++; // 該左線最大的可能性已經找到，把左線換下一位, 也可以理解成, 兩線要移動最小高度的，才能找大的
     } else {
       // 高度還未固定，繼續計算a線為l的所有組合
       r--;
