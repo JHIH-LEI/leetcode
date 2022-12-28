@@ -17,7 +17,6 @@ var myAtoi = function (s) {
   let currentIndex = 0;
   // skip space
   while (s.charCodeAt(currentIndex) === spaceASCII) {
-    console.log("skip space");
     currentIndex++;
   }
 
@@ -31,7 +30,6 @@ var myAtoi = function (s) {
     s.charCodeAt(currentIndex) <= nineASCII &&
     s.charCodeAt(currentIndex) >= zeroASCII
   ) {
-    console.log(s.charAt(currentIndex));
     if (symbol === -1) {
       if (
         (-result === maxNegativeDivideTen &&
